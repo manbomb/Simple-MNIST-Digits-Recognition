@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <script src="https://cdn.rawgit.com/BrainJS/brain.js/45ce6ffc/browser.js"></script>
+        <script src="index.pack.js"></script>
+        <script src="./mnist/dist/mnist.js"></script>
+        <script>
+
+        var set = mnist.set(1000);
+
+        var trainingSet = set.training;
+
+        //console.log(trainingSet);
+
+        const net = new brain.NeuralNetwork();
+        net.train(trainingSet);
+
+        function chooseBest(digit) {
+            const result = net.run(digit);
+            let maiorValor = 0;
+            let choosed = '';
+            for (let name in result) {
+               if (result[name] > maiorValor) {
+                    maiorValor = result[name];
+                    choosed = name;
+                }
+            }
+            
+            return choosed;
+        }
+
+        console.log("Teste:");
+
+        var digits = mnist[6].range(0, 9);
+        var digit = digits[9];
+
+        console.log(chooseBest(digit));
+
+    </script>
+    </head>
+    <body>
+    	<canvas id="mnistCanvas" width="28" height="28">
+        	Your browser does not support the HTML5 canvas tag.
+    	</canvas>
+    </body>
+</html>
